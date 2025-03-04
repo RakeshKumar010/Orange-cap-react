@@ -3,14 +3,13 @@ import { CgProfile } from "react-icons/cg";
 import { FiCompass } from "react-icons/fi";
 import { IoMenu } from "react-icons/io5";
 import { LuUserRoundPlus } from "react-icons/lu";
-import {
-  MdOutlineAddToPhotos,
+import { 
   MdOutlineAdminPanelSettings,
   MdOutlineMarkUnreadChatAlt,
 } from "react-icons/md";
 import { RiLogoutCircleLine } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
-
+import Logo from '../../../assets/image/dark-logo.png'
 const baseUrl = import.meta.env.VITE_APP_URL;
 
 const Sidebar = () => {
@@ -41,32 +40,33 @@ const Sidebar = () => {
   ];
 
   useEffect(() => {
-    // const fetchUserData = async () => {
-    //   try {
-    //     const user = JSON.parse(localStorage.getItem("user"));
-    //     if (!user || !user._id) return alert("User not found in localStorage.");
-    //     const response = await fetch(`${baseUrl}/single-user/${user._id}`);
-    //     if (response.ok) {
-    //       const result = await response.json();
-    //       if (result.password !== user.password) {
-    //         localStorage.removeItem("user");
-    //         navigate("/");
-    //       }
-    //     } else {
-    //       alert("Failed to fetch user data.");
-    //     }
-    //   } catch (error) {
-    //     console.error("Error fetching user data:", error);
-    //     alert("An error occurred. Please try again.");
-    //   }
-    // };
-    // fetchUserData();
+    const fetchUserData = async () => {
+      try {
+        const user = JSON.parse(localStorage.getItem("user"));
+        if (!user || !user._id) return alert("User not found in localStorage.");
+        const response = await fetch(`${baseUrl}/single-user/${user._id}`);
+        if (response.ok) {
+          const result = await response.json();
+          if (result.password !== user.password) {
+            localStorage.removeItem("user");
+            navigate("/");
+          }
+        } else {
+          alert("Failed to fetch user data.");
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        alert("An error occurred. Please try again.");
+      }
+    };
+    fetchUserData();
   }, [navigate]);
 
   return (
     <>
       <div className="thin-scrollbar hidden lg:block w-96 min-h-screen bg-white text-black overflow-auto shadow-lg">
         <div className="p-7">
+          <img src={Logo} alt="logo" className="w-40 mb-5"/>
           {sections.map((section, index) => (
             <div key={index} className="pb-6">
               <p className="text-gray-900  uppercase mb-3">{section.title}</p>
@@ -100,7 +100,7 @@ const Sidebar = () => {
       <div className="block lg:hidden mt-10 sm:mx-8 mx-3 md:mx-16">
         <button
           onClick={() => setIsAdminNav(!isAdminNav)}
-          className="flex items-center mb-5 gap-2 bg-white shadow-md p-5 rounded-lg  cursor-pointer"
+          className="flex w-full items-center mb-5 gap-2 bg-white shadow-md p-5 rounded-lg  cursor-pointer"
         >
           <IoMenu className="text-lg" /> Dashboard Navigation
         </button>
