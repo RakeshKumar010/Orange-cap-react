@@ -8,7 +8,7 @@ app.use(express.json());
 
 // Allow requests from specific origin
 const corsOptions = {
-    origin: ['http://localhost:5173'],
+    origin: ['http://localhost:5173','http://client.masfinancialservice.in','https://orangecap.media','https://orange-cap-react.vercel.app'],
     optionsSuccessStatus: 200
 };
 
